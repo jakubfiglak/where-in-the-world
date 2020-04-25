@@ -4,6 +4,7 @@ import { GlobalStyle } from './theme/GlobalStyle';
 import { lightTheme, darkTheme } from './theme/theme';
 import Header from './components/Header/Header';
 import InputContainer from './components/InputContainer/InputContainer';
+import CountriesContainer from './components/CountriesContainer/CountriesContainer';
 
 const App: React.FC = () => {
   const [isDarkThemeActive, setDarkTheme] = useState(false);
@@ -21,6 +22,7 @@ const App: React.FC = () => {
           isDarkThemeActive={isDarkThemeActive}
         />
         <InputContainer />
+        <CountriesContainer />
       </ThemeProvider>
     </div>
   );
