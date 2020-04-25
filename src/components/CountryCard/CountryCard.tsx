@@ -1,5 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
+import { BasicCountriesInfo } from '../../countries.model';
 
 const StyledWrapper = styled.div`
   background: ${({ theme }) => theme.colors.elements};
@@ -10,8 +12,7 @@ const StyledWrapper = styled.div`
 `;
 
 const StyledFlag = styled.img`
-  width: 264px;
-  height: 160px;
+  width: 100%;
   border-radius: 5px 5px 0 0;
 `;
 
@@ -44,24 +45,42 @@ const StyledDetail = styled.p`
   }
 `;
 
-const CountryCard: React.FC = () => (
-  <StyledWrapper>
-    <StyledFlag src="https://restcountries.eu/data/afg.svg" alt="" />
-    <StyledInfoContainer>
-      <StyledName>Afghanistan</StyledName>
-      <StyledDetailsContainer>
-        <StyledDetail>
-          <span>Population:</span> 123456789
-        </StyledDetail>
-        <StyledDetail>
-          <span>Region:</span> Asia
-        </StyledDetail>
-        <StyledDetail>
-          <span>Capital:</span> Kabul
-        </StyledDetail>
-      </StyledDetailsContainer>
-    </StyledInfoContainer>
-  </StyledWrapper>
-);
+const CountryCard: React.FC<BasicCountriesInfo> = ({
+  flag,
+  name,
+  capital,
+  region,
+  population,
+}) => {
+  const altText = `${name} flag`;
+
+  return (
+    <StyledWrapper>
+      <StyledFlag src={flag} alt={altText} />
+      <StyledInfoContainer>
+        <StyledName>{name}</StyledName>
+        <StyledDetailsContainer>
+          <StyledDetail>
+            <span>Population:</span> {population}
+          </StyledDetail>
+          <StyledDetail>
+            <span>Region:</span> {region}
+          </StyledDetail>
+          <StyledDetail>
+            <span>Capital:</span> {capital}
+          </StyledDetail>
+        </StyledDetailsContainer>
+      </StyledInfoContainer>
+    </StyledWrapper>
+  );
+};
+
+CountryCard.propTypes = {
+  capital: PropTypes.string.isRequired,
+  flag: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  population: PropTypes.number.isRequired,
+  region: PropTypes.string.isRequired,
+};
 
 export default CountryCard;
