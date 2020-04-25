@@ -1,18 +1,29 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ThemeProvider } from 'styled-components';
 import { GlobalStyle } from './theme/GlobalStyle';
-import { lightTheme } from './theme/theme';
+import { lightTheme, darkTheme } from './theme/theme';
+import Header from './components/Header/Header';
+import InputContainer from './components/InputContainer/InputContainer';
 
-function App() {
+const App: React.FC = () => {
+  const [isDarkThemeActive, setDarkTheme] = useState(false);
+
+  const toggleDarkTheme = (): void => {
+    setDarkTheme(!isDarkThemeActive);
+  };
+
   return (
     <div className="App">
-      <ThemeProvider theme={lightTheme}>
+      <ThemeProvider theme={isDarkThemeActive ? darkTheme : lightTheme}>
         <GlobalStyle />
-        <h1>hello</h1>
-        <div />
+        <Header
+          onDarkThemeToggle={toggleDarkTheme}
+          isDarkThemeActive={isDarkThemeActive}
+        />
+        <InputContainer />
       </ThemeProvider>
     </div>
   );
-}
+};
 
 export default App;

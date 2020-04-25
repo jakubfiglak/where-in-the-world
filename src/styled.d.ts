@@ -1,14 +1,24 @@
-// import original module declarations
 import 'styled-components';
 
-// and extend them!
 declare module 'styled-components' {
   export interface DefaultTheme {
-    borderRadius: string;
-
+    fontFamily: string;
+    fontWeight: {
+      light: number;
+      normal: number;
+      bold: number;
+    };
+    fontSize: {
+      xl: string;
+      l: string;
+      m: string;
+      s: string;
+    };
     colors: {
-      main: string;
-      secondary: string;
+      elements: string;
+      background: string;
+      text: string;
+      inputText: string;
     };
   }
 }
