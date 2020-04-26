@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { MdSearch } from 'react-icons/md';
+import { GlobalContext } from '../../context/GlobalState';
 
 const StyledWrapper = styled.div`
   display: flex;
@@ -49,18 +50,9 @@ const StyledSelect = styled.select`
 `;
 
 const InputContainer: React.FC = () => {
-  const [searchValue, setSearchValue] = useState('');
-  const [regionFilter, setRegionFilter] = useState('');
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    setSearchValue(e.target.value);
-  };
-
-  const handleSelectChange = (
-    e: React.ChangeEvent<HTMLSelectElement>
-  ): void => {
-    setRegionFilter(e.target.value);
-  };
+  const { nameFilter, setCountryFilter, setRegionFilter } = useContext(
+    GlobalContext
+  );
 
   return (
     <StyledWrapper>
@@ -68,14 +60,14 @@ const InputContainer: React.FC = () => {
         <StyledSearchIcon />
         <StyledSearchInput
           placeholder="Search for a country..."
-          value={searchValue}
-          onChange={handleInputChange}
+          value={nameFilter}
+          onChange={setCountryFilter}
         />
       </StyledInputContainer>
-      <StyledSelect onChange={handleSelectChange}>
+      <StyledSelect onChange={setRegionFilter}>
         <option value="">Filter by Region</option>
         <option value="Africa">Africa</option>
-        <option value="America">America</option>
+        <option value="Americas">Americas</option>
         <option value="Asia">Asia</option>
         <option value="Europe">Europe</option>
         <option value="Oceania">Oceania</option>

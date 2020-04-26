@@ -1,11 +1,11 @@
 import React from 'react';
 import { StateProvider } from './context/GlobalState';
-import MainView from './views/MainView';
+import RootView from './views/RootView';
 
 const App: React.FC = () => {
   return (
     <StateProvider>
-      <MainView />
+      <RootView />
     </StateProvider>
   );
 };

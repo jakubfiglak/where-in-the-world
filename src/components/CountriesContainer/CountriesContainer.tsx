@@ -1,50 +1,42 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
 import styled from 'styled-components';
 import CountryCard from '../CountryCard/CountryCard';
 import { BasicCountriesInfo } from '../../app.model';
-
-const apiUrl =
-  'https://restcountries.eu/rest/v2/all?fields=name;capital;region;population;flag';
+import { GlobalContext } from '../../context/GlobalState';
 
 const StyledWrapper = styled.div`
   display: grid;
   gap: 4rem;
   padding: 3.2rem 5.5rem;
+  position: relative;
 `;
 
 const CountriesContainer: React.FC = () => {
-  const [countries, setCountries] = useState<BasicCountriesInfo[]>([]);
+  const { countries, fetchCountries, nameFilter, regionFilter } = useContext(
+    GlobalContext
+  );
 
   useEffect(() => {
-    const fetchCountries = async (url: string) => {
-      const res = await fetch(url);
-      const data = await res.json();
-      localStorage.setItem('countries', JSON.stringify(data));
-      setCountries(data);
-    };
-
-    const localCountries = localStorage.getItem('countries');
-
-    if (localCountries) {
-      const localData = JSON.parse(localCountries);
-      setCountries(localData);
-    } else {
-      fetchCountries(apiUrl);
-    }
+    fetchCountries();
   }, []);
 
   return (
     <StyledWrapper>
-      {countries.map((country: BasicCountriesInfo) => (
-        <CountryCard
-          key={country.name}
-          name={country.name}
-          flag={country.flag}
-          region={country.region}
-          population={country.population}
-          capital={country.capital}
-        />
-      ))}
+      {countries
+        .filter((country) => country.name.toLowerCase().includes(nameFilter))
+        .filter((country) =>
+          regionFilter ? country.region === regionFilter : country
+        )
+        .map((country: BasicCountriesInfo) => (
+          <CountryCard
+            key={country.name}
+            name={country.name}
+            flag={country.flag}
+            region={country.region}
+            population={country.population}
+            capital={country.capital}
+          />
+        ))}
     </StyledWrapper>
   );
 };
