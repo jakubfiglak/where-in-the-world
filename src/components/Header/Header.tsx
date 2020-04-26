@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { FiMoon } from 'react-icons/fi';
 import { TiWeatherSunny } from 'react-icons/ti';
-import PropTypes from 'prop-types';
+import { GlobalContext } from '../../context/GlobalState';
 
 const StyledWrapper = styled.header`
   display: flex;
@@ -45,38 +45,29 @@ const StyledButton = styled.button`
   }
 `;
 
-type HeaderProps = {
-  onDarkThemeToggle: () => void;
-  isDarkThemeActive: boolean;
-};
+const Header: React.FC = () => {
+  const { toggleTheme, isDarkThemeActive } = useContext(GlobalContext);
 
-const Header: React.FC<HeaderProps> = ({
-  onDarkThemeToggle,
-  isDarkThemeActive,
-}) => (
-  <StyledWrapper>
-    <StyledLogoContainer>
-      <StyledLogo href="#">Where in the world?</StyledLogo>
-    </StyledLogoContainer>
-    <StyledButton onClick={onDarkThemeToggle}>
-      {isDarkThemeActive ? (
-        <>
-          <TiWeatherSunny />
-          Light mode
-        </>
-      ) : (
-        <>
-          <FiMoon />
-          Dark mode
-        </>
-      )}
-    </StyledButton>
-  </StyledWrapper>
-);
-
-Header.propTypes = {
-  onDarkThemeToggle: PropTypes.func.isRequired,
-  isDarkThemeActive: PropTypes.bool.isRequired,
+  return (
+    <StyledWrapper>
+      <StyledLogoContainer>
+        <StyledLogo href="#">Where in the world?</StyledLogo>
+      </StyledLogoContainer>
+      <StyledButton onClick={toggleTheme}>
+        {isDarkThemeActive ? (
+          <>
+            <TiWeatherSunny />
+            Light mode
+          </>
+        ) : (
+          <>
+            <FiMoon />
+            Dark mode
+          </>
+        )}
+      </StyledButton>
+    </StyledWrapper>
+  );
 };
 
 export default Header;

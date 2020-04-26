@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import CountryCard from '../CountryCard/CountryCard';
-import { BasicCountriesInfo } from '../../countries.model';
+import { BasicCountriesInfo } from '../../app.model';
 
 const apiUrl =
   'https://restcountries.eu/rest/v2/all?fields=name;capital;region;population;flag';

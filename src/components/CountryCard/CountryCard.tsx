@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { BasicCountriesInfo } from '../../countries.model';
+import { BasicCountriesInfo } from '../../app.model';
 
 const StyledWrapper = styled.div`
   background: ${({ theme }) => theme.colors.elements};
