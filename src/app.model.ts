@@ -6,6 +6,15 @@ export type BasicCountriesInfo = {
   population: number;
 };
 
+export type CountriesDetails = {
+  nativeName: string;
+  subRegion: string;
+  topLevelDomain: string;
+  currencies: string[];
+  languages: string[];
+  borderCountries: string[];
+};
+
 export type State = {
   isDarkThemeActive: boolean;
   countries: BasicCountriesInfo[];

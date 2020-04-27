@@ -1,7 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import { Redirect } from 'react-router-dom';
+import slug from 'slug';
 import { BasicCountriesInfo } from '../../app.model';
+import StyledDetail from '../CountryDetail/CountryDetail';
+import StyledDetailsContainer from '../DetailsContainer/DetailsContainer';
 
 const StyledWrapper = styled.div`
   background: ${({ theme }) => theme.colors.elements};
@@ -29,22 +33,6 @@ const StyledName = styled.h2`
   margin: 0;
 `;
 
-const StyledDetailsContainer = styled.div`
-  display: grid;
-  gap: 0.8rem;
-`;
-
-const StyledDetail = styled.p`
-  font-size: ${({ theme }) => theme.fontSize.m};
-  font-weight: ${({ theme }) => theme.fontWeight.light};
-  line-height: 1.15;
-  margin: 0;
-
-  span {
-    font-weight: ${({ theme }) => theme.fontWeight.normal};
-  }
-`;
-
 const CountryCard: React.FC<BasicCountriesInfo> = ({
   flag,
   name,
@@ -52,10 +40,34 @@ const CountryCard: React.FC<BasicCountriesInfo> = ({
   region,
   population,
 }) => {
+  const [redirect, setRedirect] = useState(false);
+
+  const handleCardClick = (): void => {
+    setRedirect(true);
+  };
+
   const altText = `${name} flag`;
+  const sluggedName = slug(name, { lower: true });
+
+  if (redirect) {
+    return (
+      <Redirect
+        to={{
+          pathname: `countries/${sluggedName}`,
+          state: {
+            flag,
+            name,
+            capital,
+            region,
+            population,
+          },
+        }}
+      />
+    );
+  }
 
   return (
-    <StyledWrapper>
+    <StyledWrapper onClick={handleCardClick}>
       <StyledFlag src={flag} alt={altText} />
       <StyledInfoContainer>
         <StyledName>{name}</StyledName>
