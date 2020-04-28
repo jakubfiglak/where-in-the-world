@@ -3,7 +3,7 @@ import MainTemplate from '../templates/MainTemplate';
 import InputContainer from '../components/InputContainer/InputContainer';
 import CountriesContainer from '../components/CountriesContainer/CountriesContainer';
 
-const RootView: React.FC = () => {
+const Root: React.FC = () => {
   return (
     <MainTemplate>
       <>
@@ -14,4 +14,4 @@ const RootView: React.FC = () => {
   );
 };
 
-export default RootView;
+export default Root;

@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { Redirect } from 'react-router-dom';
-import slug from 'slug';
+import { Link } from 'react-router-dom';
 import { BasicCountriesInfo } from '../../app.model';
 import StyledDetail from '../CountryDetail/CountryDetail';
 import StyledDetailsContainer from '../DetailsContainer/DetailsContainer';
@@ -13,6 +12,14 @@ const StyledWrapper = styled.div`
   display: grid;
   gap: 2.4rem;
   padding-block-end: 4.6rem;
+  color: ${({ theme }) => theme.colors.text};
+  text-decoration: none;
+  transition: transform 0.15s;
+  cursor: pointer;
+
+  &:hover {
+    transform: scale(1.05);
+  }
 `;
 
 const StyledFlag = styled.img`
@@ -40,40 +47,17 @@ const CountryCard: React.FC<BasicCountriesInfo> = ({
   region,
   population,
 }) => {
-  const [redirect, setRedirect] = useState(false);
-
-  const handleCardClick = (): void => {
-    setRedirect(true);
-  };
-
   const altText = `${name} flag`;
-  const sluggedName = slug(name, { lower: true });
-
-  if (redirect) {
-    return (
-      <Redirect
-        to={{
-          pathname: `countries/${sluggedName}`,
-          state: {
-            flag,
-            name,
-            capital,
-            region,
-            population,
-          },
-        }}
-      />
-    );
-  }
 
   return (
-    <StyledWrapper onClick={handleCardClick}>
+    <StyledWrapper as={Link} to={`/countries/${name}`}>
       <StyledFlag src={flag} alt={altText} />
       <StyledInfoContainer>
         <StyledName>{name}</StyledName>
         <StyledDetailsContainer>
           <StyledDetail>
-            <span>Population:</span> {population}
+            <span>Population:</span>{' '}
+            {new Intl.NumberFormat('en-US').format(population)}
           </StyledDetail>
           <StyledDetail>
             <span>Region:</span> {region}

@@ -1,8 +1,8 @@
 import React from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { StateProvider } from './context/GlobalState';
-import RootView from './views/RootView';
-import DetailsView from './views/DetailsView';
+import RootView from './views/Root';
+import DetailsPage from './views/DetailsPage';
 
 const App: React.FC = () => {
   return (
@@ -10,7 +10,7 @@ const App: React.FC = () => {
       <StateProvider>
         <Switch>
           <Route exact path="/" component={RootView} />
-          <Route path="/countries" component={DetailsView} />
+          <Route path="/countries" component={DetailsPage} />
         </Switch>
       </StateProvider>
     </BrowserRouter>

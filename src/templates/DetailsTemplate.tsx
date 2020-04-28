@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { FaLongArrowAltLeft } from 'react-icons/fa';
-import slug from 'slug';
-import { BasicCountriesInfo, CountriesDetails } from '../app.model';
+import { CountriesDetails } from '../app.model';
 import DetailsContainer from '../components/DetailsContainer/DetailsContainer';
 import StyledDetail from '../components/CountryDetail/CountryDetail';
+import { GlobalContext } from '../context/GlobalState';
 
 const StyledWrapper = styled.article`
   padding: 4rem 2.8rem;
@@ -26,6 +26,11 @@ const StyledLink = styled(Link)`
   font-weight: ${({ theme }) => theme.fontWeight.light};
   box-shadow: 0px 0px 7px rgba(0, 0, 0, 0.293139);
   border-radius: 2px;
+  transition: transform 0.15s;
+
+  &:hover {
+    transform: scale(1.1);
+  }
 `;
 
 const StyledFlag = styled.img`
@@ -56,6 +61,7 @@ const StyledHeading = styled.h2`
 
 const StyledLinksContainer = styled.div`
   display: flex;
+  flex-wrap: wrap;
 `;
 
 const StyledCountryLink = styled(Link)`
@@ -64,79 +70,98 @@ const StyledCountryLink = styled(Link)`
   font-size: ${({ theme }) => theme.fontSize.m};
   text-decoration: none;
   padding: 0.6rem 3rem;
-  margin-inline-end: 1rem;
+  margin: 0 1rem 1rem 0;
+  transition: transform 0.15s;
+
+  &:hover {
+    transform: scale(1.1);
+  }
 `;
 
-const DetailsTemplate: React.FC<BasicCountriesInfo & CountriesDetails> = ({
-  name,
+const DetailsTemplate: React.FC<CountriesDetails> = ({
   flag,
-  capital,
-  region,
-  population,
+  name,
   nativeName,
-  subRegion,
+  population,
+  region,
+  subregion,
+  capital,
   topLevelDomain,
   currencies,
   languages,
-  borderCountries,
-}) => (
-  <StyledWrapper>
-    <StyledLink to="/">
-      <FaLongArrowAltLeft />
-      Back
-    </StyledLink>
-    <StyledFlag src={flag} alt="" />
-    <StyledName>{name}</StyledName>
-    <StyledDetailsContainer>
-      <StyledDetail>
-        <span>Native Name: </span>
-        {nativeName}
-      </StyledDetail>
-      <StyledDetail>
-        <span>Population: </span>
-        {population}
-      </StyledDetail>
-      <StyledDetail>
-        <span>Region: </span>
-        {region}
-      </StyledDetail>
-      <StyledDetail>
-        <span>Sub Region: </span>
-        {subRegion}
-      </StyledDetail>
-      <StyledDetail>
-        <span>Capital: </span>
-        {capital}
-      </StyledDetail>
-    </StyledDetailsContainer>
-    <StyledDetailsContainer>
-      <StyledDetail>
-        <span>Top Level Domain: </span>
-        {topLevelDomain}
-      </StyledDetail>
-      <StyledDetail>
-        <span>Currencies: </span>
-        {currencies.join(', ')}
-      </StyledDetail>
-      <StyledDetail>
-        <span>Languages: </span>
-        {languages.join(', ')}
-      </StyledDetail>
-    </StyledDetailsContainer>
-    <StyledBorderSection>
-      <StyledHeading>Border Countries:</StyledHeading>
-      <StyledLinksContainer>
-        {borderCountries.map((country) => {
-          const sluggedName = slug(country, { lower: true });
-          return (
-            <StyledCountryLink key={country} to={`/countries/${sluggedName}`}>
-              {country}
-            </StyledCountryLink>
-          );
-        })}
-      </StyledLinksContainer>
-    </StyledBorderSection>
-  </StyledWrapper>
-);
+  borders,
+}) => {
+  const { countries } = useContext(GlobalContext);
+  // console.log(countries);
+  // console.log(borders);
+
+  // Convert border countries alpha3codes to full names
+
+  const borderCountries = borders.map((border) => {
+    const searchedCountry = countries.find(
+      (country) => country.alpha3Code === border
+    );
+    return searchedCountry?.name;
+  });
+
+  return (
+    <StyledWrapper>
+      <StyledLink to="/">
+        <FaLongArrowAltLeft />
+        Back
+      </StyledLink>
+      <StyledFlag src={flag} alt="" />
+      <StyledName>{name}</StyledName>
+      <StyledDetailsContainer>
+        <StyledDetail>
+          <span>Native Name: </span>
+          {nativeName}
+        </StyledDetail>
+        <StyledDetail>
+          <span>Population: </span>
+          {new Intl.NumberFormat('en-US').format(population)}
+        </StyledDetail>
+        <StyledDetail>
+          <span>Region: </span>
+          {region}
+        </StyledDetail>
+        <StyledDetail>
+          <span>Sub Region: </span>
+          {subregion}
+        </StyledDetail>
+        <StyledDetail>
+          <span>Capital: </span>
+          {capital}
+        </StyledDetail>
+      </StyledDetailsContainer>
+      <StyledDetailsContainer>
+        <StyledDetail>
+          <span>Top Level Domain: </span>
+          {topLevelDomain.join(', ')}
+        </StyledDetail>
+        <StyledDetail>
+          <span>Currencies: </span>
+          {currencies.map((currency) => currency.name).join(', ')}
+        </StyledDetail>
+        <StyledDetail>
+          <span>Languages: </span>
+          {languages.map((language) => language.name).join(', ')}
+        </StyledDetail>
+      </StyledDetailsContainer>
+      <StyledBorderSection>
+        <StyledHeading>Border Countries:</StyledHeading>
+        <StyledLinksContainer>
+          {borderCountries.map((country) => {
+            return (
+              <StyledCountryLink key={country} to={`/countries/${country}`}>
+                {country}
+              </StyledCountryLink>
+            );
+          })}
+        </StyledLinksContainer>
+      </StyledBorderSection>
+    </StyledWrapper>
+  );
+};
 
 export default DetailsTemplate;

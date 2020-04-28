@@ -6,6 +6,8 @@ import { GlobalContext } from '../../context/GlobalState';
 
 const StyledWrapper = styled.div`
   display: grid;
+  grid-template-columns: repeat(auto-fill, 264px);
+  justify-content: center;
   gap: 4rem;
   padding: 3.2rem 5.5rem;
   position: relative;

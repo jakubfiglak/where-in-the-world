@@ -4,15 +4,30 @@ export type BasicCountriesInfo = {
   capital: string;
   region: string;
   population: number;
+  alpha3Code?: string;
 };
 
 export type CountriesDetails = {
+  flag: string;
+  name: string;
+  capital: string;
+  region: string;
+  population: number;
   nativeName: string;
-  subRegion: string;
-  topLevelDomain: string;
-  currencies: string[];
-  languages: string[];
-  borderCountries: string[];
+  subregion: string;
+  topLevelDomain: string[];
+  currencies: {
+    code: string;
+    name: string;
+    symbol: string;
+  }[];
+  languages: {
+    iso639_1: string;
+    iso639_2: string;
+    name: string;
+    nativeName: string;
+  }[];
+  borders: string[];
 };
 
 export type State = {

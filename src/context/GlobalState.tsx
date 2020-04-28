@@ -32,7 +32,7 @@ export const StateProvider: React.FC = ({ children }) => {
       data = JSON.parse(localCountries);
     } else {
       const res = await fetch(
-        'https://restcountries.eu/rest/v2/all?fields=name;capital;region;population;flag'
+        'https://restcountries.eu/rest/v2/all?fields=name;capital;region;population;flag;alpha3Code'
       );
       data = await res.json();
       localStorage.setItem('countries', JSON.stringify(data));
