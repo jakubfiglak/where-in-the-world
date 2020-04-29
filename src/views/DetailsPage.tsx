@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router';
+import Loader from '../components/Loader/Loader';
 import MainTemplate from '../templates/MainTemplate';
 import DetailsTemplate from '../templates/DetailsTemplate';
 import { CountriesDetails } from '../app.model';
@@ -70,7 +71,7 @@ const DetailsPage: React.FC = () => {
   return (
     <MainTemplate>
       {loading ? (
-        <p>loading...</p>
+        <Loader />
       ) : (
         <DetailsTemplate
           name={name}

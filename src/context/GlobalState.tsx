@@ -1,4 +1,4 @@
-import React, { createContext, useReducer } from 'react';
+import React, { createContext, useReducer, useEffect } from 'react';
 import AppReducer from './AppReducer';
 import { State } from '../app.model';
 
@@ -56,6 +56,12 @@ export const StateProvider: React.FC = ({ children }) => {
       payload: e.target.value,
     });
   };
+
+  // is it a good practice to use useEffect in ContextProvider component? I tried this approach because I want my countries array to be set to proper values when I refresh the details page (before I was fetching data only on CountriesContainer mount and when I refreshed the DetailsPage, border countries section was broken beacuse I compared it to countries array from global context)
+
+  useEffect(() => {
+    fetchCountries();
+  }, []);
 
   return (
     <GlobalContext.Provider
