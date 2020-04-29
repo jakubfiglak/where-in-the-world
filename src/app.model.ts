@@ -37,8 +37,10 @@ export type State = {
   loading: boolean;
   nameFilter: string;
   regionFilter: string;
+  countryDetails: CountriesDetails[];
   toggleTheme: () => void;
   fetchCountries: () => void;
   setCountryFilter: (e: React.ChangeEvent<HTMLInputElement>) => void;
   setRegionFilter: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+  fetchCountryDetails: (countryName: string) => void;
 };

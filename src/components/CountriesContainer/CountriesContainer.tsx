@@ -4,6 +4,7 @@ import CountryCard from '../CountryCard/CountryCard';
 import { BasicCountriesInfo } from '../../app.model';
 import { GlobalContext } from '../../context/GlobalState';
 import Loader from '../Loader/Loader';
+import ErrorMessage from '../ErrorMessage/ErrorMessage';
 
 const StyledWrapper = styled.div`
   display: grid;
@@ -15,15 +16,18 @@ const StyledWrapper = styled.div`
 `;
 
 const CountriesContainer: React.FC = () => {
-  const { countries, nameFilter, regionFilter, loading } = useContext(
+  const { countries, nameFilter, regionFilter, loading, error } = useContext(
     GlobalContext
   );
 
   return (
     <StyledWrapper>
-      {loading ? (
-        <Loader />
-      ) : (
+      {loading && <Loader />}{' '}
+      {error && (
+        <ErrorMessage>Ups, something went wrong - {error}</ErrorMessage>
+      )}{' '}
+      {!loading &&
+        !error &&
         countries
           .filter((country) => country.name.toLowerCase().includes(nameFilter))
           .filter((country) =>
@@ -38,8 +42,7 @@ const CountriesContainer: React.FC = () => {
               population={country.population}
               capital={country.capital}
             />
-          ))
-      )}
+          ))}
     </StyledWrapper>
   );
 };

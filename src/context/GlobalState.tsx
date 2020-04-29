@@ -6,13 +6,15 @@ const initialState: State = {
   isDarkThemeActive: false,
   countries: [],
   error: null,
-  loading: true,
+  loading: false,
   nameFilter: '',
   regionFilter: '',
+  countryDetails: [],
   toggleTheme: () => null,
   fetchCountries: () => null,
   setCountryFilter: () => null,
   setRegionFilter: () => null,
+  fetchCountryDetails: () => null,
 };
 
 export const GlobalContext = createContext(initialState);
@@ -25,22 +27,51 @@ export const StateProvider: React.FC = ({ children }) => {
   };
 
   const fetchCountries = async () => {
+    dispatch({
+      type: 'SET_LOADING',
+    });
     let data = [];
     const localCountries = localStorage.getItem('countries');
 
     if (localCountries) {
       data = JSON.parse(localCountries);
     } else {
-      const res = await fetch(
-        'https://restcountries.eu/rest/v2/all?fields=name;capital;region;population;flag;alpha3Code'
-      );
-      data = await res.json();
-      localStorage.setItem('countries', JSON.stringify(data));
+      try {
+        const res = await fetch(
+          'https://restcountries.eu/rest/v2/all?fields=name;capital;region;population;flag;alpha3Code'
+        );
+        data = await res.json();
+        localStorage.setItem('countries', JSON.stringify(data));
+      } catch (err) {
+        dispatch({
+          type: 'SET_ERROR',
+          payload: err.message,
+        });
+      }
     }
     dispatch({
       type: 'GET_COUNTRIES',
       payload: data,
     });
+  };
+
+  const fetchCountryDetails = async (countryName: string) => {
+    dispatch({ type: 'SET_LOADING' });
+    try {
+      const res = await fetch(
+        `https://restcountries.eu/rest/v2/name/${countryName}?fields=name;capital;population;flag;region;nativeName;subregion;topLevelDomain;currencies;languages;borders`
+      );
+      const data = await res.json();
+      dispatch({
+        type: 'GET_COUNTRY_DETAILS',
+        payload: data,
+      });
+    } catch (err) {
+      dispatch({
+        type: 'SET_ERROR',
+        payload: err.message,
+      });
+    }
   };
 
   const setCountryFilter = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -72,10 +103,12 @@ export const StateProvider: React.FC = ({ children }) => {
         loading: state.loading,
         nameFilter: state.nameFilter,
         regionFilter: state.regionFilter,
+        countryDetails: state.countryDetails,
         toggleTheme,
         fetchCountries,
         setCountryFilter,
         setRegionFilter,
+        fetchCountryDetails,
       }}
     >
       {children}

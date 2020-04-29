@@ -1,92 +1,51 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
 import { useLocation } from 'react-router';
 import Loader from '../components/Loader/Loader';
 import MainTemplate from '../templates/MainTemplate';
 import DetailsTemplate from '../templates/DetailsTemplate';
 import { CountriesDetails } from '../app.model';
+import { GlobalContext } from '../context/GlobalState';
+import ErrorMessage from '../components/ErrorMessage/ErrorMessage';
 
 const DetailsPage: React.FC = () => {
   const { pathname } = useLocation();
   const pathArr = pathname.split('/');
   const countryName = pathArr[pathArr.length - 1];
 
-  const initialState: CountriesDetails[] = [
-    {
-      flag: '',
-      name: '',
-      capital: '',
-      region: '',
-      population: 0,
-      nativeName: '',
-      subregion: '',
-      topLevelDomain: [],
-      currencies: [],
-      languages: [],
-      borders: [],
-    },
-  ];
-
-  // is there a better way to avoid error with countriesDetails[0]
-  // being undefined before the state is settled than setting this whole initial state?
-
-  const [countryDetails, setCountryDetails] = useState<CountriesDetails[]>(
-    initialState
+  const { error, loading, countryDetails, fetchCountryDetails } = useContext(
+    GlobalContext
   );
-  const [error, setError] = useState('');
-  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    const fetchCountriesDetails = async () => {
-      setLoading(true);
-      try {
-        const res = await fetch(
-          `https://restcountries.eu/rest/v2/name/${countryName}?fields=name;capital;population;flag;region;nativeName;subregion;topLevelDomain;currencies;languages;borders`
-        );
-        const data = await res.json();
-        setLoading(false);
-        setCountryDetails(data);
-      } catch (err) {
-        setLoading(false);
-        setError(err.message);
-      }
-    };
-
-    fetchCountriesDetails();
+    fetchCountryDetails(countryName);
   }, [countryName]);
-
-  const {
-    borders,
-    capital,
-    currencies,
-    flag,
-    languages,
-    name,
-    nativeName,
-    population,
-    region,
-    subregion,
-    topLevelDomain,
-  } = countryDetails[0];
 
   return (
     <MainTemplate>
-      {loading ? (
-        <Loader />
-      ) : (
-        <DetailsTemplate
-          name={name}
-          flag={flag}
-          capital={capital}
-          region={region}
-          population={population}
-          nativeName={nativeName}
-          subregion={subregion}
-          topLevelDomain={topLevelDomain}
-          currencies={currencies}
-          languages={languages}
-          borders={borders}
-        />
-      )}
+      {loading && <Loader />}{' '}
+      {error && (
+        <ErrorMessage>Ups, something went wrong - {error}</ErrorMessage>
+      )}{' '}
+      {!loading &&
+        !error &&
+        countryDetails
+          .filter((country) => country.name === countryName)
+          .map((country: CountriesDetails) => (
+            <DetailsTemplate
+              key={country.name}
+              name={country.name}
+              flag={country.flag}
+              capital={country.capital}
+              region={country.region}
+              population={country.population}
+              nativeName={country.nativeName}
+              subregion={country.subregion}
+              topLevelDomain={country.topLevelDomain}
+              currencies={country.currencies}
+              languages={country.languages}
+              borders={country.borders}
+            />
+          ))}
     </MainTemplate>
   );
 };
