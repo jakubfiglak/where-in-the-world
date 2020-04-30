@@ -20,29 +20,30 @@ const CountriesContainer: React.FC = () => {
     GlobalContext
   );
 
+  if (loading) {
+    return <Loader />;
+  }
+  if (error) {
+    return <ErrorMessage>Ups, something went wrong - {error}</ErrorMessage>;
+  }
+
   return (
     <StyledWrapper>
-      {loading && <Loader />}{' '}
-      {error && (
-        <ErrorMessage>Ups, something went wrong - {error}</ErrorMessage>
-      )}{' '}
-      {!loading &&
-        !error &&
-        countries
-          .filter((country) => country.name.toLowerCase().includes(nameFilter))
-          .filter((country) =>
-            regionFilter ? country.region === regionFilter : country
-          )
-          .map((country: BasicCountriesInfo) => (
-            <CountryCard
-              key={country.name}
-              name={country.name}
-              flag={country.flag}
-              region={country.region}
-              population={country.population}
-              capital={country.capital}
-            />
-          ))}
+      {countries
+        .filter((country) => country.name.toLowerCase().includes(nameFilter))
+        .filter((country) =>
+          regionFilter ? country.region === regionFilter : country
+        )
+        .map((country: BasicCountriesInfo) => (
+          <CountryCard
+            key={country.name}
+            name={country.name}
+            flag={country.flag}
+            region={country.region}
+            population={country.population}
+            capital={country.capital}
+          />
+        ))}
     </StyledWrapper>
   );
 };

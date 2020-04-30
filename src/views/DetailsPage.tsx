@@ -20,32 +20,41 @@ const DetailsPage: React.FC = () => {
     fetchCountryDetails(countryName);
   }, [countryName]);
 
+  if (loading) {
+    return (
+      <MainTemplate>
+        <Loader />
+      </MainTemplate>
+    );
+  }
+  if (error) {
+    return (
+      <MainTemplate>
+        <ErrorMessage>Ups, something went wrong - {error}</ErrorMessage>
+      </MainTemplate>
+    );
+  }
+
   return (
     <MainTemplate>
-      {loading && <Loader />}{' '}
-      {error && (
-        <ErrorMessage>Ups, something went wrong - {error}</ErrorMessage>
-      )}{' '}
-      {!loading &&
-        !error &&
-        countryDetails
-          .filter((country) => country.name === countryName)
-          .map((country: CountriesDetails) => (
-            <DetailsTemplate
-              key={country.name}
-              name={country.name}
-              flag={country.flag}
-              capital={country.capital}
-              region={country.region}
-              population={country.population}
-              nativeName={country.nativeName}
-              subregion={country.subregion}
-              topLevelDomain={country.topLevelDomain}
-              currencies={country.currencies}
-              languages={country.languages}
-              borders={country.borders}
-            />
-          ))}
+      {countryDetails
+        .filter((country) => country.name === countryName)
+        .map((country: CountriesDetails) => (
+          <DetailsTemplate
+            key={country.name}
+            name={country.name}
+            flag={country.flag}
+            capital={country.capital}
+            region={country.region}
+            population={country.population}
+            nativeName={country.nativeName}
+            subregion={country.subregion}
+            topLevelDomain={country.topLevelDomain}
+            currencies={country.currencies}
+            languages={country.languages}
+            borders={country.borders}
+          />
+        ))}
     </MainTemplate>
   );
 };

@@ -5,11 +5,16 @@ import { TiWeatherSunny } from 'react-icons/ti';
 import { GlobalContext } from '../../context/GlobalState';
 
 const StyledWrapper = styled.header`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
   background: ${({ theme }) => theme.colors.elements};
   padding: 3rem 1.6rem;
+  z-index: 999;
 `;
 
 const StyledLogo = styled.a`

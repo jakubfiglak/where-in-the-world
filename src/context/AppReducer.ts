@@ -7,7 +7,8 @@ type Action =
   | { type: 'SET_REGION_FILTER'; payload: string }
   | { type: 'GET_COUNTRY_DETAILS'; payload: CountriesDetails[] }
   | { type: 'SET_ERROR'; payload: string }
-  | { type: 'SET_LOADING' };
+  | { type: 'SET_LOADING' }
+  | { type: 'SET_LOCAL_THEME'; payload: boolean };
 
 export default (state: State, action: Action) => {
   switch (action.type) {
@@ -41,6 +42,12 @@ export default (state: State, action: Action) => {
       return {
         ...state,
         isDarkThemeActive: !state.isDarkThemeActive,
+      };
+
+    case 'SET_LOCAL_THEME':
+      return {
+        ...state,
+        isDarkThemeActive: action.payload,
       };
 
     case 'SET_COUNTRY_FILTER':

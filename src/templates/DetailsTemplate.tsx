@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { FaLongArrowAltLeft } from 'react-icons/fa';
+import PropTypes from 'prop-types';
 import { CountriesDetails } from '../app.model';
 import DetailsContainer from '../components/DetailsContainer/DetailsContainer';
 import StyledDetail from '../components/CountryDetail/CountryDetail';
@@ -9,8 +10,12 @@ import { GlobalContext } from '../context/GlobalState';
 
 const StyledWrapper = styled.article`
   padding: 4rem 2.8rem;
-  display: grid;
-  gap: 1.6rem;
+  margin: 7.9rem auto 0 auto;
+  max-width: 1440px;
+
+  @media screen and (min-width: 768px) {
+    padding: 8rem;
+  }
 `;
 
 const StyledLink = styled(Link)`
@@ -33,16 +38,34 @@ const StyledLink = styled(Link)`
   }
 `;
 
+const StyledContent = styled.div`
+  display: grid;
+  gap: 1.6rem;
+  margin-block-start: 4.8rem;
+
+  @media screen and (min-width: 768px) {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10rem;
+  }
+`;
+
 const StyledFlag = styled.img`
   width: 100%;
   border-radius: 5px;
-  margin-block-start: 4.8rem;
 `;
 
 const StyledName = styled.h1`
   font-size: ${({ theme }) => theme.fontSize.xl};
   font-weight: ${({ theme }) => theme.fontWeight.bold};
   line-height: 1.4;
+`;
+
+const StyledDetailsWrapper = styled.div`
+  @media screen and (min-width: 1024px) {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
 `;
 
 const StyledDetailsContainer = styled(DetailsContainer)`
@@ -92,10 +115,6 @@ const DetailsTemplate: React.FC<CountriesDetails> = ({
   borders,
 }) => {
   const { countries } = useContext(GlobalContext);
-  // console.log(countries);
-  // console.log(borders);
-
-  // Convert border countries alpha3codes to full names
 
   const borderCountries = borders.map((border) => {
     const searchedCountry = countries.find(
@@ -110,58 +129,91 @@ const DetailsTemplate: React.FC<CountriesDetails> = ({
         <FaLongArrowAltLeft />
         Back
       </StyledLink>
-      <StyledFlag src={flag} alt="" />
-      <StyledName>{name}</StyledName>
-      <StyledDetailsContainer>
-        <StyledDetail>
-          <span>Native Name: </span>
-          {nativeName}
-        </StyledDetail>
-        <StyledDetail>
-          <span>Population: </span>
-          {new Intl.NumberFormat('en-US').format(population)}
-        </StyledDetail>
-        <StyledDetail>
-          <span>Region: </span>
-          {region}
-        </StyledDetail>
-        <StyledDetail>
-          <span>Sub Region: </span>
-          {subregion}
-        </StyledDetail>
-        <StyledDetail>
-          <span>Capital: </span>
-          {capital}
-        </StyledDetail>
-      </StyledDetailsContainer>
-      <StyledDetailsContainer>
-        <StyledDetail>
-          <span>Top Level Domain: </span>
-          {topLevelDomain.join(', ')}
-        </StyledDetail>
-        <StyledDetail>
-          <span>Currencies: </span>
-          {currencies.map((currency) => currency.name).join(', ')}
-        </StyledDetail>
-        <StyledDetail>
-          <span>Languages: </span>
-          {languages.map((language) => language.name).join(', ')}
-        </StyledDetail>
-      </StyledDetailsContainer>
-      <StyledBorderSection>
-        <StyledHeading>Border Countries:</StyledHeading>
-        <StyledLinksContainer>
-          {borderCountries.map((country) => {
-            return (
-              <StyledCountryLink key={country} to={`/countries/${country}`}>
-                {country}
-              </StyledCountryLink>
-            );
-          })}
-        </StyledLinksContainer>
-      </StyledBorderSection>
+      <StyledContent>
+        <StyledFlag src={flag} alt="" />
+        <div>
+          <StyledName>{name}</StyledName>
+          <StyledDetailsWrapper>
+            <StyledDetailsContainer>
+              <StyledDetail>
+                <span>Native Name: </span>
+                {nativeName}
+              </StyledDetail>
+              <StyledDetail>
+                <span>Population: </span>
+                {new Intl.NumberFormat('en-US').format(population)}
+              </StyledDetail>
+              <StyledDetail>
+                <span>Region: </span>
+                {region}
+              </StyledDetail>
+              <StyledDetail>
+                <span>Sub Region: </span>
+                {subregion}
+              </StyledDetail>
+              <StyledDetail>
+                <span>Capital: </span>
+                {capital}
+              </StyledDetail>
+            </StyledDetailsContainer>
+            <StyledDetailsContainer>
+              <StyledDetail>
+                <span>Top Level Domain: </span>
+                {topLevelDomain.join(', ')}
+              </StyledDetail>
+              <StyledDetail>
+                <span>Currencies: </span>
+                {currencies.map((currency) => currency.name).join(', ')}
+              </StyledDetail>
+              <StyledDetail>
+                <span>Languages: </span>
+                {languages.map((language) => language.name).join(', ')}
+              </StyledDetail>
+            </StyledDetailsContainer>
+          </StyledDetailsWrapper>
+          <StyledBorderSection>
+            <StyledHeading>Border Countries:</StyledHeading>
+            <StyledLinksContainer>
+              {borderCountries.map((country) => {
+                return (
+                  <StyledCountryLink key={country} to={`/countries/${country}`}>
+                    {country}
+                  </StyledCountryLink>
+                );
+              })}
+            </StyledLinksContainer>
+          </StyledBorderSection>
+        </div>
+      </StyledContent>
     </StyledWrapper>
   );
+};
+
+DetailsTemplate.propTypes = {
+  flag: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  nativeName: PropTypes.string.isRequired,
+  population: PropTypes.number.isRequired,
+  region: PropTypes.string.isRequired,
+  subregion: PropTypes.string.isRequired,
+  capital: PropTypes.string.isRequired,
+  topLevelDomain: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
+  currencies: PropTypes.arrayOf(
+    PropTypes.shape({
+      code: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      symbol: PropTypes.string.isRequired,
+    }).isRequired
+  ).isRequired,
+  languages: PropTypes.arrayOf(
+    PropTypes.shape({
+      iso639_1: PropTypes.string.isRequired,
+      iso639_2: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      nativeName: PropTypes.string.isRequired,
+    }).isRequired
+  ).isRequired,
+  borders: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
 };
 
 export default DetailsTemplate;

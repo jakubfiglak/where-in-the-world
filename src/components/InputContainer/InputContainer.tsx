@@ -6,7 +6,7 @@ import { GlobalContext } from '../../context/GlobalState';
 const StyledWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  margin: 2.4rem 1.6rem;
+  margin: 10.3rem 1.6rem 2.4rem 1.6rem;
 `;
 
 const StyledInputContainer = styled.div`

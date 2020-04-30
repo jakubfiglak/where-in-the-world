@@ -1,4 +1,5 @@
 import React, { createContext, useReducer, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import AppReducer from './AppReducer';
 import { State } from '../app.model';
 
@@ -88,11 +89,24 @@ export const StateProvider: React.FC = ({ children }) => {
     });
   };
 
-  // is it a good practice to use useEffect in ContextProvider component? I tried this approach because I want my countries array to be set to proper values when I refresh the details page (before I was fetching data only on CountriesContainer mount and when I refreshed the DetailsPage, border countries section was broken beacuse I compared it to countries array from global context)
-
   useEffect(() => {
     fetchCountries();
+
+    const localTheme = localStorage.getItem('isDarkThemeActive');
+    if (localTheme) {
+      dispatch({
+        type: 'SET_LOCAL_THEME',
+        payload: JSON.parse(localTheme),
+      });
+    }
   }, []);
+
+  useEffect(() => {
+    localStorage.setItem(
+      'isDarkThemeActive',
+      JSON.stringify(state.isDarkThemeActive)
+    );
+  }, [state.isDarkThemeActive]);
 
   return (
     <GlobalContext.Provider
@@ -114,4 +128,8 @@ export const StateProvider: React.FC = ({ children }) => {
       {children}
     </GlobalContext.Provider>
   );
+};
+
+StateProvider.propTypes = {
+  children: PropTypes.element.isRequired,
 };
