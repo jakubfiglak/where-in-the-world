@@ -174,7 +174,7 @@ const DetailsTemplate: React.FC<CountriesDetails> = ({
           <StyledBorderSection>
             <StyledHeading>Border Countries:</StyledHeading>
             <StyledLinksContainer>
-              {borderCountries.map((country) => {
+              {borders.map((country) => {
                 return (
                   <StyledCountryLink key={country} to={`/countries/${country}`}>
                     {country}

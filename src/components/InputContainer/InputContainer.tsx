@@ -62,9 +62,15 @@ const InputContainer: React.FC = () => {
           placeholder="Search for a country..."
           value={nameFilter}
           onChange={setCountryFilter}
+          name="Country search"
+          aria-label="Country search"
         />
       </StyledInputContainer>
-      <StyledSelect onChange={setRegionFilter}>
+      <StyledSelect
+        onChange={setRegionFilter}
+        title="Region filter"
+        aria-label="Region filter"
+      >
         <option value="">Filter by Region</option>
         <option value="Africa">Africa</option>
         <option value="Americas">Americas</option>

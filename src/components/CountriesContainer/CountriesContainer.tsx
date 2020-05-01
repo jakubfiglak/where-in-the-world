@@ -42,6 +42,7 @@ const CountriesContainer: React.FC = () => {
             region={country.region}
             population={country.population}
             capital={country.capital}
+            alpha3Code={country.alpha3Code}
           />
         ))}
     </StyledWrapper>

@@ -10,7 +10,19 @@ const initialState: State = {
   loading: false,
   nameFilter: '',
   regionFilter: '',
-  countryDetails: [],
+  countryDetails: {
+    name: '',
+    flag: '',
+    capital: '',
+    region: '',
+    population: 0,
+    nativeName: '',
+    subregion: '',
+    topLevelDomain: [],
+    currencies: [],
+    languages: [],
+    borders: [],
+  },
   toggleTheme: () => null,
   fetchCountries: () => null,
   setCountryFilter: () => null,
@@ -56,11 +68,11 @@ export const StateProvider: React.FC = ({ children }) => {
     });
   };
 
-  const fetchCountryDetails = async (countryName: string) => {
+  const fetchCountryDetails = async (countryCode: string) => {
     dispatch({ type: 'SET_LOADING' });
     try {
       const res = await fetch(
-        `https://restcountries.eu/rest/v2/name/${countryName}?fields=name;capital;population;flag;region;nativeName;subregion;topLevelDomain;currencies;languages;borders`
+        `https://restcountries.eu/rest/v2/alpha/${countryCode}?fields=name;capital;population;flag;region;nativeName;subregion;topLevelDomain;currencies;languages;borders;alpha3Code`
       );
       const data = await res.json();
       dispatch({

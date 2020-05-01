@@ -12,6 +12,7 @@ export type CountriesDetails = {
   name: string;
   capital: string;
   region: string;
+  alpha3Code?: string;
   population: number;
   nativeName: string;
   subregion: string;
@@ -37,7 +38,7 @@ export type State = {
   loading: boolean;
   nameFilter: string;
   regionFilter: string;
-  countryDetails: CountriesDetails[];
+  countryDetails: CountriesDetails;
   toggleTheme: () => void;
   fetchCountries: () => void;
   setCountryFilter: (e: React.ChangeEvent<HTMLInputElement>) => void;

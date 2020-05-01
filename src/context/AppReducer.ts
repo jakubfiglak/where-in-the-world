@@ -5,7 +5,7 @@ type Action =
   | { type: 'GET_COUNTRIES'; payload: BasicCountriesInfo[] }
   | { type: 'SET_COUNTRY_FILTER'; payload: string }
   | { type: 'SET_REGION_FILTER'; payload: string }
-  | { type: 'GET_COUNTRY_DETAILS'; payload: CountriesDetails[] }
+  | { type: 'GET_COUNTRY_DETAILS'; payload: CountriesDetails }
   | { type: 'SET_ERROR'; payload: string }
   | { type: 'SET_LOADING' }
   | { type: 'SET_LOCAL_THEME'; payload: boolean };

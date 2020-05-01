@@ -46,11 +46,12 @@ const CountryCard: React.FC<BasicCountriesInfo> = ({
   capital,
   region,
   population,
+  alpha3Code,
 }) => {
   const altText = `${name} flag`;
 
   return (
-    <StyledWrapper as={Link} to={`/countries/${name}`}>
+    <StyledWrapper as={Link} to={`/countries/${alpha3Code}`}>
       <StyledFlag src={flag} alt={altText} />
       <StyledInfoContainer>
         <StyledName>{name}</StyledName>
@@ -77,6 +78,7 @@ CountryCard.propTypes = {
   name: PropTypes.string.isRequired,
   population: PropTypes.number.isRequired,
   region: PropTypes.string.isRequired,
+  alpha3Code: PropTypes.string.isRequired,
 };
 
 export default CountryCard;
