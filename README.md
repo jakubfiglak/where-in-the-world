@@ -1,8 +1,35 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Where In The World? :rocket:
 
-## Available Scripts
+![image](https://user-images.githubusercontent.com/55458549/80844566-40520c00-8c07-11ea-82e7-c8603efcb8d2.png)
 
-In the project directory, you can run:
+## Overview :telescope:
+
+"Where In The World" is the app where you can browse all countries of the world and see some basic information about them. You can search for a country by its name or filter by region. You can also see more detailed information about each country by clicking on its card on main screen and click through to the border countries on the detail page.
+
+## Tech stack :hammer:
+
+- **Framework:** React with TypeScript
+- **State Management:** React Context API + React Hooks
+- **Styling:** Styled-Components
+
+## Screenshots :iphone:
+
+### Main features
+
+![main_features](https://user-images.githubusercontent.com/55458549/80845592-ff0f2b80-8c09-11ea-8a16-0db7c4c4e1e2.gif)
+
+### Filtering
+
+![filtering](https://user-images.githubusercontent.com/55458549/80845606-0a625700-8c0a-11ea-9d21-264050c660ae.gif)
+
+### Theme Switcher
+
+![theme_switcher](https://user-images.githubusercontent.com/55458549/80845619-11896500-8c0a-11ea-91f0-4c825c56d5db.gif)
+
+## How to install :floppy_disk:
+
+If you want to play with this project locally on your machine, feel free to copy or download this repository.
+Then, in the project directory, you can run:
 
 ### `npm start`
 
@@ -27,18 +54,10 @@ Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
+## Live :boom:
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+You can see the live version of this project [here](https://witw-app.netlify.app/)
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Credits :raised_hands:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+Credits to [Frontend Mentor](https://www.frontendmentor.io/) which is an amazing website full of coding challenges for aspiring web developers at any level. This app is based on Frontend Mentor's [REST Countries API with color theme switcher](https://www.frontendmentor.io/challenges/rest-countries-api-with-color-theme-switcher-5cacc469fec04111f7b848ca) challenge.
