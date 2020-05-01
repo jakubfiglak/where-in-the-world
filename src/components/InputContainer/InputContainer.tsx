@@ -6,7 +6,13 @@ import { GlobalContext } from '../../context/GlobalState';
 const StyledWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  margin: 10.3rem 1.6rem 2.4rem 1.6rem;
+  margin: 10.3rem 0 2.4rem;
+
+  @media screen and (min-width: 768px) {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
 `;
 
 const StyledInputContainer = styled.div`
@@ -14,6 +20,11 @@ const StyledInputContainer = styled.div`
   background: ${({ theme }) => theme.colors.elements};
   border-radius: 5px;
   margin-block-end: 4rem;
+
+  @media screen and (min-width: 768px) {
+    margin: 0;
+    width: 480px;
+  }
 `;
 
 const StyledSearchInput = styled.input`

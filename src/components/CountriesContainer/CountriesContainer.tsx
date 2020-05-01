@@ -11,7 +11,7 @@ const StyledWrapper = styled.div`
   grid-template-columns: repeat(auto-fill, 264px);
   justify-content: center;
   gap: 4rem;
-  padding: 3.2rem 5.5rem;
+  padding: 3.2rem 0;
   position: relative;
 `;
 

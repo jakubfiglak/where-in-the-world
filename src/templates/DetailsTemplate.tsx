@@ -116,13 +116,6 @@ const DetailsTemplate: React.FC<CountriesDetails> = ({
 }) => {
   const { countries } = useContext(GlobalContext);
 
-  const borderCountries = borders.map((border) => {
-    const searchedCountry = countries.find(
-      (country) => country.alpha3Code === border
-    );
-    return searchedCountry?.name;
-  });
-
   return (
     <StyledWrapper>
       <StyledLink to="/">
@@ -175,9 +168,12 @@ const DetailsTemplate: React.FC<CountriesDetails> = ({
             <StyledHeading>Border Countries:</StyledHeading>
             <StyledLinksContainer>
               {borders.map((country) => {
+                const countryData = countries.find(
+                  (item) => item.alpha3Code === country
+                )!;
                 return (
                   <StyledCountryLink key={country} to={`/countries/${country}`}>
-                    {country}
+                    {countryData.name}
                   </StyledCountryLink>
                 );
               })}

@@ -90,7 +90,7 @@ export const StateProvider: React.FC = ({ children }) => {
   const setCountryFilter = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch({
       type: 'SET_COUNTRY_FILTER',
-      payload: e.target.value,
+      payload: e.target.value.toLowerCase(),
     });
   };
 
