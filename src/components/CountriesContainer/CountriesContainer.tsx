@@ -35,17 +35,15 @@ const CountriesContainer: React.FC = () => {
             country.region.includes(regionFilter) &&
             country.name.toLowerCase().includes(nameFilter)
         )
-        .map((country: BasicCountriesInfo) => {
-          const {
+        .map(
+          ({
             name,
             flag,
             region,
             population,
             capital,
             alpha3Code,
-          } = country;
-
-          return (
+          }: BasicCountriesInfo) => (
             <CountryCard
               key={name}
               name={name}
@@ -55,8 +53,8 @@ const CountriesContainer: React.FC = () => {
               capital={capital}
               alpha3Code={alpha3Code}
             />
-          );
-        })}
+          )
+        )}
     </StyledWrapper>
   );
 };

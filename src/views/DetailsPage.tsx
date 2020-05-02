@@ -34,21 +34,35 @@ const DetailsPage: React.FC = () => {
     );
   }
 
+  const {
+    name,
+    flag,
+    capital,
+    region,
+    population,
+    nativeName,
+    subregion,
+    topLevelDomain,
+    currencies,
+    languages,
+    borders,
+  } = countryDetails;
+
   return (
     <MainTemplate>
       <DetailsTemplate
-        key={countryDetails.name}
-        name={countryDetails.name}
-        flag={countryDetails.flag}
-        capital={countryDetails.capital}
-        region={countryDetails.region}
-        population={countryDetails.population}
-        nativeName={countryDetails.nativeName}
-        subregion={countryDetails.subregion}
-        topLevelDomain={countryDetails.topLevelDomain}
-        currencies={countryDetails.currencies}
-        languages={countryDetails.languages}
-        borders={countryDetails.borders}
+        key={name}
+        name={name}
+        flag={flag}
+        capital={capital}
+        region={region}
+        population={population}
+        nativeName={nativeName}
+        subregion={subregion}
+        topLevelDomain={topLevelDomain}
+        currencies={currencies}
+        languages={languages}
+        borders={borders}
       />
     </MainTemplate>
   );
