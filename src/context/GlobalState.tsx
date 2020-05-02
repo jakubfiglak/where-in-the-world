@@ -1,7 +1,7 @@
 import React, { createContext, useReducer, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import AppReducer from './AppReducer';
-import { State } from '../app.model';
+import { State } from '../types/app.model';
 
 const initialState: State = {
   isDarkThemeActive: false,

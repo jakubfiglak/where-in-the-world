@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
 import CountryCard from '../CountryCard/CountryCard';
-import { BasicCountriesInfo } from '../../app.model';
+import { BasicCountriesInfo } from '../../types/app.model';
 import { GlobalContext } from '../../context/GlobalState';
 import Loader from '../Loader/Loader';
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
@@ -30,21 +30,33 @@ const CountriesContainer: React.FC = () => {
   return (
     <StyledWrapper>
       {countries
-        .filter((country) => country.name.toLowerCase().includes(nameFilter))
-        .filter((country) =>
-          regionFilter ? country.region === regionFilter : country
+        .filter(
+          (country) =>
+            country.region.includes(regionFilter) &&
+            country.name.toLowerCase().includes(nameFilter)
         )
-        .map((country: BasicCountriesInfo) => (
-          <CountryCard
-            key={country.name}
-            name={country.name}
-            flag={country.flag}
-            region={country.region}
-            population={country.population}
-            capital={country.capital}
-            alpha3Code={country.alpha3Code}
-          />
-        ))}
+        .map((country: BasicCountriesInfo) => {
+          const {
+            name,
+            flag,
+            region,
+            population,
+            capital,
+            alpha3Code,
+          } = country;
+
+          return (
+            <CountryCard
+              key={name}
+              name={name}
+              flag={flag}
+              region={region}
+              population={population}
+              capital={capital}
+              alpha3Code={alpha3Code}
+            />
+          );
+        })}
     </StyledWrapper>
   );
 };

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { FaLongArrowAltLeft } from 'react-icons/fa';
 import PropTypes from 'prop-types';
-import { CountriesDetails } from '../app.model';
+import { CountriesDetails } from '../types/app.model';
 import DetailsContainer from '../components/DetailsContainer/DetailsContainer';
 import StyledDetail from '../components/CountryDetail/CountryDetail';
 import { GlobalContext } from '../context/GlobalState';

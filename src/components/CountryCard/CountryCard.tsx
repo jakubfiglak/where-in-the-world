@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { BasicCountriesInfo } from '../../app.model';
+import { BasicCountriesInfo } from '../../types/app.model';
 import StyledDetail from '../CountryDetail/CountryDetail';
 import StyledDetailsContainer from '../DetailsContainer/DetailsContainer';
 

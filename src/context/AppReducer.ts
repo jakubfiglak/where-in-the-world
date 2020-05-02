@@ -1,4 +1,8 @@
-import { State, BasicCountriesInfo, CountriesDetails } from '../app.model';
+import {
+  State,
+  BasicCountriesInfo,
+  CountriesDetails,
+} from '../types/app.model';
 
 type Action =
   | { type: 'SWITCH_THEME' }
